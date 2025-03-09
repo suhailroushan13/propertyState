@@ -1,0 +1,5 @@
+{
+  "PORT": 5001,
+  "MONGO_URI": "mongodb+srv://suhail:vn8hq7DI0jowPIVX@payments.tey1gsx.mongodb.net/property",
+  "JWT_KEY": "FLIEJFKEHJFKEHFKEFH"
+}
