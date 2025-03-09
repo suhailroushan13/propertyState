@@ -17,6 +17,12 @@ const Dashboard = () => {
       >
         Logout
       </button>
+      <button
+        className="btn bg-red-700 text-white text-center p-2 px-2 py-3  mt-2 ml-2"
+        onClick={() => navigate("/users")}
+      >
+        Users
+      </button>
     </>
   );
 };

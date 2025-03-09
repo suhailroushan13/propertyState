@@ -49,6 +49,7 @@ router.post("/login", async (req, res) => {
     let { email, password } = req.body;
 
     let user = await userModel.findOne({ email });
+    console.log(user)
     if (!user) {
       return res.status(400).json({ msg: "User not found" });
     }

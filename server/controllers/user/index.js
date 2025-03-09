@@ -1,5 +1,6 @@
 import express from "express";
 import userModel from "../../models/User.js";
+import bcrypt from "bcrypt";
 
 const router = express.Router();
 
@@ -13,9 +14,9 @@ router.get("/getall", async (req, res) => {
   }
 });
 
-router.get("/getbyid/:id", async (req, res) => {
+router.get("/getbyid", async (req, res) => {
   try {
-    const user = await userModel.findOne({ _id: req.params.id });
+    const user = await userModel.findOne({ _id: req.user.id });
     res.status(200).json({ msg: user });
   } catch (error) {
     console.log(error);
@@ -23,11 +24,18 @@ router.get("/getbyid/:id", async (req, res) => {
   }
 });
 
-router.put("/editbyid/:id", async (req, res) => {
+router.put("/editbyid", async (req, res) => {
   try {
+    let { fullName, email, phone, password } = req.body;
+    let updating = { fullName, email, phone, password };
+    if (password) {
+      const hashPass = await bcrypt.hash(password, 12);
+      updating.password = hashPass;
+    }
+
     await userModel.findOneAndUpdate(
-      { _id: req.params.id },
-      { $set: req.body },
+      { _id: req.user.id },
+      { $set: updating },
       { new: true }
     );
     res.status(200).json({ msg: "user Updated Successfully" });
@@ -37,9 +45,9 @@ router.put("/editbyid/:id", async (req, res) => {
   }
 });
 
-router.delete("/deletebyid/:id", async (req, res) => {
+router.delete("/deletebyid", async (req, res) => {
   try {
-    await userModel.findOneAndDelete({ _id: req.params.id });
+    await userModel.findOneAndDelete({ _id: req.user.id });
     res.status(200).json({ msg: "user Deleted Successfully" });
   } catch (error) {
     console.log(error);

@@ -19,9 +19,9 @@ const Login = () => {
       let token = response.data.token;
       localStorage.setItem("token", token);
       setAlerts({ type: "success", msg: response.data.msg });
-      // setTimeout(() => {
-      //   navigate("/dashboard");
-      // }, 2000);
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
     } catch (error) {
       console.log(error.response.data.msg);
       setAlerts({
